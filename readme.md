@@ -117,3 +117,27 @@ module.exports = {
   ]
 }
 ```
+
+## Setup postgresql with Docker
+- > docker run --name gostack_postgres -e POSTGRES_PASSWORD=supersecret -p 5433:5432 -d
+postgres
+
+## Docker commands
+- See all containers
+- > docker ps -a
+- Stop a container
+- > docker stop CONTAINER_ID
+- Start a container
+- > docker start CONTAINER_ID
+
+## Type ORM Setup
+- > yarn add typeorm pg
+
+## Type ORM CLI commands
+- Start CLI (config package json)
+- > yarn typeorm
+- > yarn typeorm migration:create -n CreateAppointments
+- > yarn typeorm migration:run
+- > yarn typeorm migration:revert
+- > yarn typeorm migration:show
+
