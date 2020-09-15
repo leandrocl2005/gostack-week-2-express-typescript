@@ -1,4 +1,3 @@
-/* eslint-disable camelcase */
 import { startOfHour } from 'date-fns';
 import { inject, injectable } from 'tsyringe';
 
