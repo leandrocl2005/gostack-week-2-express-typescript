@@ -1,8 +1,10 @@
-import User from '@modules/users/infra/typeorm/entities/User';
+import { inject, injectable } from 'tsyringe';
+
 import AppError from '@shared/errors/AppError';
 import IUsersRepository from '../repositories/IUsersRepository';
-import { inject, injectable } from 'tsyringe';
 import IStorageProvider from '@shared/container/providers/StorageProvider/models/IStorageProvider';
+
+import User from '@modules/users/infra/typeorm/entities/User';
 
 interface IRequest {
   user_id: string;
@@ -20,7 +22,6 @@ class UpdateUserAvatarService {
   ) { }
 
   public async execute({ user_id, avatarFilename }: IRequest): Promise<User> {
-
     const user = await this.usersRepository.findById(user_id);
 
     if (!user)
