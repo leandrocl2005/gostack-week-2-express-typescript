@@ -123,6 +123,11 @@ module.exports = {
 postgres
 
 ## Docker commands
+- Install mongo
+- > docker run --name mongodb -p 27017:27017 -d -t mongo
+- Start mongo
+- > docker start mongodb
+
 - See all containers
 - > docker ps -a
 - Stop a container
