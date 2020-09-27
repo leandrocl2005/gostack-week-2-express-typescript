@@ -118,15 +118,19 @@ module.exports = {
 }
 ```
 
-## Setup postgresql with Docker
-- > docker run --name gostack_postgres -e POSTGRES_PASSWORD=supersecret -p 5433:5432 -d
-postgres
-
 ## Docker commands
+- Install postgres
+- > docker run --name gostack_postgres -e POSTGRES_PASSWORD=supersecret -p 5433:5432 -d
+- Start Postgres
+- > docker run gostack_postgres
 - Install mongo
 - > docker run --name mongodb -p 27017:27017 -d -t mongo
 - Start mongo
 - > docker start mongodb
+- Install redis
+- > docker run --name redis -p 6379:6379 -d -t redis:alpine
+- Start redis
+- > docker start redis
 
 - See all containers
 - > docker ps -a

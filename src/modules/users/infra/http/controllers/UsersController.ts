@@ -1,5 +1,6 @@
 import CreateUserService from "@modules/users/services/CreateUserService";
 import UpdateUserAvatarService from "@modules/users/services/UpdateUserAvatarService";
+import { classToClass } from "class-transformer";
 import { Request, Response } from "express";
 import { container } from "tsyringe";
 
@@ -9,22 +10,22 @@ export default class UserController {
 
     const createUser = container.resolve(CreateUserService);
 
-    const { password: userPassword, ...rest } = await createUser.execute({
+    const user = await createUser.execute({
       name,
       email,
       password,
     });
 
-    return response.json({ ...rest });
+    return response.json(classToClass(user));
   }
 
   async update(request: Request, response: Response): Promise<Response> {
     const updateUserAvatar = container.resolve(UpdateUserAvatarService);
-    const { password: userPassword, ...rest } = await updateUserAvatar.execute({
+    const user = await updateUserAvatar.execute({
       user_id: request.user.id,
       avatarFilename: request.file.filename,
     });
 
-    return response.json({ ...rest });
+    return response.json(classToClass(user));
   }
 }
