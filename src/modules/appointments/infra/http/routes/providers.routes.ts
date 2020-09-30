@@ -21,7 +21,7 @@ providersRouter.get(
       provider_id: Joi.string().uuid().required()
     }
   }),
-  providerDayAvailabilityController.index
+  providerMonthAvailabilityController.index
 )
 providersRouter.get(
   '/:provider_id/day-availability',
@@ -30,7 +30,7 @@ providersRouter.get(
       provider_id: Joi.string().uuid().required()
     }
   }),
-  providerMonthAvailabilityController.index
+  providerDayAvailabilityController.index
 )
 
 export default providersRouter;
