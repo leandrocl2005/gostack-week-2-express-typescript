@@ -47,8 +47,6 @@ class ListProviderAppointmentsService {
         cacheKey,
         classToClass(appointments)
       );
-
-      console.log("Buscou do banco")
     }
 
     return appointments;
