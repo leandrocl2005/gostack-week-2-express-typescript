@@ -213,6 +213,25 @@ module.exports = {
 - o usuário não pode agendar em um horário que já passou
 - o usuário não pode agendar serviços consigo mesmo
 
+## Digital Ocean Deploy
+
+- Faça a conta: https://cloud.digitalocean.com/
+- Converter o código em javascript
+  - > yarn add @babel/cli @babel/core @babel/node -D
+  - > yarn add @babel/preset-env @babel/preset-typescript -D
+  - > yarn add babel-plugin-module-resolver -D
+  - > yarn add --dev babel-plugin-transform-typescript-metadata
+  - > yarn add --dev @babel/plugin-proposal-decorators
+  - > yarn add --dev @babel/plugin-proposal-class-properties
+- crie na raíz do projeto *babel.config.js*
+- configurar babel
+- configurar buil command:
+- `"babel src --extensions \".js,.ts\"  --out-dir dist --copy-files"`
+- alterar ormconfig *src* -> *dist*
+- alterar ormconfig *ts* -> *js*
+- teste o build: `node dist/shared/infra/http/server.js`
+
+
 
 
 
