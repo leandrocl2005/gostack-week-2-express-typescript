@@ -322,5 +322,54 @@ module.exports = {
 
 - > node dist/shared/infra/http/server.js
 
+## Nginx as a Reverse Proxy Server
 
+- > sudo apt install nginx
+- > sudo ufw allow 80
+- Entre em *<ip_address>:80*
+- > cd /etc/nginx/sites-available
+- > ls
+- > vim default
+- > sudo su
+- > cp default gobarber
+- > vim gobarber
+- Configure o arquivo gobarber
+- > cd ..
+- > cd sites-enabled
+- > ln -s /etc/nginx/sites-available/gobarber gobarber
+- > ls -la
+- > rm default
+- Teste se as configurações estão ok:
+- > nginx -t
+- > service nginx reload
+- > service nginx restart
+- > exit
+- > cd ~/
+- > cd app
+- > cd <repo>
+- > node dist/shared/infra/http/server.js
+- Teste a api em *http://<ip_address>*
+
+## Mantendo a aplicação no ar
+
+- > docker update --restart=unless-stopped <postgres_id>
+- > docker update --restart=unless-stopped <mongo_id>
+- > docker update --restart=unless-stopped <redis_id>
+- > sudo npm install -g pm2
+- > pm2 start dist/shared/infra/http/server.js --name gobarber-api
+- > pm2 list
+- > pm2 startup systemd
+- > sudo env PATH=$PATH:/usr/bin /usr/lib/node_modules/pm2/bin/pm2 startup systemd -u deploy --hp /home/deploy
+- > pm2 logs
+- > pm2 monit
+
+## Adicionar dominino
+
+- No arquivo *gobarber* em */etc/nginx/sites-available* como sudo adicione seu domínio ao *server_name*
+- > service nginx -t
+- > service nginx restart
+
+## Ubuntu commands
+
+- Ver versão do Ubuntu: `lsb_release -a`
 
