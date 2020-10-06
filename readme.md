@@ -213,9 +213,10 @@ module.exports = {
 - o usuário não pode agendar em um horário que já passou
 - o usuário não pode agendar serviços consigo mesmo
 
-## Digital Ocean Deploy
+# Deploy
 
-- Faça a conta: https://cloud.digitalocean.com/
+## Fazer a build da aplicação
+
 - Converter o código em javascript
   - > yarn add @babel/cli @babel/core @babel/node -D
   - > yarn add @babel/preset-env @babel/preset-typescript -D
@@ -231,7 +232,95 @@ module.exports = {
 - alterar ormconfig *ts* -> *js*
 - teste o build: `node dist/shared/infra/http/server.js`
 
+## Criando servidor e conectando na Digital Ocean
 
+- Faça a conta: https://cloud.digitalocean.com/
+- Crie uma instância com docker
+- Gere a chave ssh com Putty: https://docs.joyent.com/public-cloud/getting-started/ssh-keys/generating-an-ssh-key-manually/manually-generating-your-ssh-key-in-windows
+- Conecte com Putty: https://docs.aws.amazon.com/pt_br/AWSEC2/latest/UserGuide/putty.html
+
+## No servidor da Digital Ocean como root
+
+- > apt update
+- > apt upgrade
+- > adduser deploy
+- > usermod -aG sudo deploy
+- > cd /home/deploy
+- > mkdir .ssh
+- > ls -la
+- > chown deploy:deploy .ssh/
+- > ls -la
+- > cp ~/.ssh/authorized_keys /home/deploy/.ssh
+- > cd .ssh
+- > ls -la
+- > chown deploy:deploy authorized_keys
+- > ls -la
+
+## No servidor da Digital Ocean como user deploy
+- > curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
+- > sudo apt install yarn
+- > sudo apt purge yarn
+- > sudo apt autoremove
+- > curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
+- > echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
+- > sudo apt update
+- > sudo apt update && sudo apt install --no-install-recommends yarn
+
+## Clone project from github
+
+- > ssh-keygen
+- > cd ~/.ssh/
+- > ls -la
+- > cat id_rsa.pub
+- SSH and GPG keys -> add new (cole, isso no github se tiver privado)
+- > cd ~/
+- > ls
+- > mkdir app
+- > cd app
+- > git clone <repo>
+- > cd <repo>
+- > yarn
+- > yarn build
+
+## Docker Postgresql setup
+
+- > sudo groupadd docker
+- > sudo usermod -aG docker $USER
+- > exit
+- > ssh deploy@<your_server_ip>
+- > docker run -d --name postgresql -e POSTGRESQL_PASSWORD=XXXXXX -e POSTGRESQL_USERNAME=postgres -e POSTGRESQL_DATABASE=gobarber -p XXXXXX:5432 bitnami/postgresql:latest
+- > cd app
+- > cd <repo>
+- > cp ormconfig.example.json ormconfig.json
+- > vim ormconfig.json
+- Configure o arquivo *ormconfig.json*
+- > ./node_modules/.bin/typeorm migration:run
+
+## Docker Mongo setup
+
+- > docker run -d --name mongodb -e MONGODB_USERNAME=gobarber -e MONGODB_PASSWORD=XXXX -e MONGODB_DATABASE=gobarber bitnami/mongodb:latest
+- > docker stop <container_number>
+- > docker rm <container_number>
+- >  docker run -d --name mongodb -e MONGODB_USERNAME=gobarber -e MONGODB_PASSWORD=XXXXXX -e MONGODB_DATABASE=gobarber -p XXXXXX:27017 bitnami/mongodb:latest
+- Configure o arquivo *ormconfig.json*
+
+## Docker Redis setup
+
+- > docker run -d --name redis -e REDIS_PASSWORD=XXXXXX -p XXXXXX:6379 bitnami/redis:latest
+- > cp .env.example .env
+- Configure o arquivo *.env*
+
+## Vim commands
+
+- > vim <file>
+- > i
+- > ESC
+- > :x
+- > :c
+
+## Testando a aplicação e setup
+
+- > node dist/shared/infra/http/server.js
 
 
 
