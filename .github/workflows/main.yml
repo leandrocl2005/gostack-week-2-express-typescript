@@ -34,7 +34,7 @@ jobs:
           port: ${{secrets.SSH_PORT}}
           key: ${{secrets.SSH_KEY}}
           source: "dist"
-          target: "test"
+          target: "~/app"
         
       
       # Substituir o código existente na página dist pelo novo código
