@@ -369,6 +369,19 @@ module.exports = {
 - > service nginx -t
 - > service nginx restart
 
+## Certificado https
+
+- > sudo snap install core; sudo snap refresh core
+- > sudo apt-get remove certbot
+- > sudo ln -s /snap/bin/certbot /usr/bin/certbot
+- > sudo certbot --nginx
+- > sudo certbot renew --dry-run
+
+## CI/CD
+
+- Problema com chave <ResolverDepois>
+
+
 ## Ubuntu commands
 
 - Ver versão do Ubuntu: `lsb_release -a`
