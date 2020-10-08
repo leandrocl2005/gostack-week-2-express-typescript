@@ -38,7 +38,7 @@ jobs:
           target: "~/app2"
         
       
-      # Substituir o código existente na página dist pelo novo código
+      # Substituir o código existente na página dist pelo
       # Executar yarn na digital ocean
       # Executar as migrations do TYPEORM
       # restart no servidor NODE.js
